@@ -18,7 +18,12 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('v1')
     ->name('api.v1.')
     ->group(function () {
-        Route::post('verificationCodes','VerificationCodesController@store')->name('verificationCodes.store');
+
+        //手机验证码
+        Route::post('verificationCodes', 'VerificationCodesController@store')->name('verificationCodes.store');
+
+        //用户注册
+        Route::post('users', 'UsersController@store')->name('users.store');
     });
 
 
