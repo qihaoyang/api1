@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Auth\MustVerifyEmail as MustVerifyEmailTrait;
 use Illuminate\Support\Facades\Auth;
+use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Support\Str;
 
@@ -59,7 +60,7 @@ use Illuminate\Support\Str;
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
  * @mixin \Eloquent
  */
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable implements MustVerifyEmail,JWTSubject
 {
     use Traits\LastActivedAtHelper;
     use Traits\ActiveUserHelper;
@@ -149,5 +150,16 @@ class User extends Authenticatable implements MustVerifyEmail
         }
 
         $this->attributes['avatar'] = $path;
+    }
+
+
+    //这个返回 user 的 id
+    public function getJWTIdentifier(){
+        return $this->getKey();
+    }
+
+    //是我们需要额外在 JWT 载荷中增加的自定义内容
+    public function getJWTCustomClaims(){
+        return [];
     }
 }

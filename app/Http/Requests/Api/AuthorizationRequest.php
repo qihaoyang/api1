@@ -14,13 +14,10 @@ class AuthorizationRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            'code'         => ['required_without:access_token','string'],
-            'access_token' => ['required_without:code','string'],
+            'username' => ['required', 'string'],
+            'password' => ['required', 'string', 'alpha_dash'],
         ];
 
-        if ($this->social_type == 'wechat' && !$this->code) {
-            $rules['openid'] = 'required';
-        }
         return $rules;
     }
 }
