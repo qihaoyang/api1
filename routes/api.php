@@ -19,6 +19,9 @@ Route::prefix('v1')
     ->name('api.v1.')
     ->group(function () {
 
+        /**
+         * 登录注册相关
+         */
         Route::middleware('customThrottle:'.config('api.rate_limits.sign'))->group(function () {
             //手机验证码
             Route::post('verificationCodes', 'VerificationCodesController@store')->name('verificationCodes.store');
@@ -50,8 +53,33 @@ Route::prefix('v1')
 
         });
 
+
+        /**
+         * 非登录注册相关
+         */
         Route::middleware('customThrottle:'.config('api.rate_limits.access'))->group(function () {
 
+            /**
+             * 游客可以访问
+             */
+
+            //某个用户信息
+            Route::get('users/{user}', 'UsersController@show')->name('users.show');
+
+
+            /**
+             * 登录用户可以访问
+             */
+
+            /**
+             * 当前登录用户信息,
+             * 注意这里的 auth:api 中间是 : 不是 .
+             * 说明使用的是 auth 中间件，指定的是 api 守护（对应 config/auth.php 中 guards.api）
+             */
+
+            Route::middleware('auth:api')->group(function () {
+                Route::get('user', 'UsersController@me')->name('user.show');
+            });
         });
 
     });

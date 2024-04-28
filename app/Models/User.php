@@ -58,6 +58,12 @@ use Illuminate\Support\Str;
  * @method static \Illuminate\Database\Eloquent\Builder|User wherePassword($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereRememberToken($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
+ * @property string|null $phone
+ * @property string|null $weixin_openid
+ * @property string|null $weixin_unionid
+ * @method static \Illuminate\Database\Eloquent\Builder|User wherePhone($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereWeixinOpenid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereWeixinUnionid($value)
  * @mixin \Eloquent
  */
 class User extends Authenticatable implements MustVerifyEmail,JWTSubject

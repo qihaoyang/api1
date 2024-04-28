@@ -12,6 +12,12 @@ use Illuminate\Support\Facades\Cache;
 
 class UsersController extends Controller
 {
+    /**
+     * @param  UserRequest  $request
+     * @return UserResource
+     * @throws AuthenticationException
+     * 用户登录
+     */
     public function store(UserRequest $request)
     {
         $cache_key  = 'verificationCode_'.$request->verification_key;
@@ -31,7 +37,29 @@ class UsersController extends Controller
         ]);
 
         Cache::forget($cache_key);
-        return new UserResource($user);
+        return (new UserResource($user))->showSensitiveFields();
 
+    }
+
+
+    /**
+     * @param  Request  $request
+     * @return UserResource
+     * 当前登录用户信息
+     */
+    public function me(Request $request)
+    {
+
+        return (new UserResource($request->user()))->showSensitiveFields();
+    }
+
+    /**
+     * @param  User  $user
+     * @return UserResource
+     * 获取某个用户的信息
+     */
+    public function show(User $user)
+    {
+        return new UserResource($user);
     }
 }
