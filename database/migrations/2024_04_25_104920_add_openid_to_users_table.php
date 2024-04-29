@@ -26,6 +26,8 @@ return new class extends Migration {
      */
     public function down()
     {
+        DB::table('users')->whereNull('password')->update(['password' => 'password']);
+
         Schema::table('users', function (Blueprint $table) {
             $table->dropColumn(['weixin_openid', 'weixin_unionid']);
             $table->string('password')->nullable(false)->change();

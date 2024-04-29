@@ -16,12 +16,17 @@ class TopicRequest extends FormRequest
     {
         switch ($this->method()) {
             case 'POST':
-            case 'PUT':
-            case 'PATCH':
                 $rules = [
                     'title'       => 'required|string',
                     'body'        => 'required|string',
                     'category_id' => 'required|exists:categories,id',
+                ];
+                break;
+            case 'PATCH':
+                $rules = [
+                    'title'       => 'string',
+                    'body'        => 'string',
+                    'category_id' => 'exists:categories,id',
                 ];
                 break;
 
