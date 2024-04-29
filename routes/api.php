@@ -79,6 +79,10 @@ Route::prefix('v1')
 
             Route::middleware('auth:api')->group(function () {
                 Route::get('user', 'UsersController@me')->name('user.show');
+
+                Route::patch('user', 'UsersController@update')->name('user.update');
+
+                Route::post('images','ImagesController@store')->name('images.store');
             });
         });
 

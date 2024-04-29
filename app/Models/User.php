@@ -127,6 +127,11 @@ class User extends Authenticatable implements MustVerifyEmail,JWTSubject
         return $this->hasMany(Reply::class);
     }
 
+    public function images()
+    {
+        return $this->hasMany(Image::class);
+    }
+
     public function markAsRead()
     {
         $this->notification_count = 0;
@@ -168,4 +173,6 @@ class User extends Authenticatable implements MustVerifyEmail,JWTSubject
     public function getJWTCustomClaims(){
         return [];
     }
+
+
 }
