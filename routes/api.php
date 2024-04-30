@@ -67,7 +67,15 @@ Route::prefix('v1')
             Route::get('users/{user}', 'UsersController@show')->name('users.show');
             Route::get('users/{user}/topics', 'TopicsController@userIndex')->name('users.topics.index');
             Route::get('categories', 'CategoriesController@index')->name('categories.index');
-            Route::resource('topics', 'TopicsController')->only(['index', 'show']);
+            Route::apiResource('topics', 'TopicsController')->only(['index', 'show']);
+
+            //回复列表
+            Route::apiResource('topics.replies', 'RepliesController')->only([
+                'index'
+            ]);
+
+            //某个用户的发表的回复列表
+            Route::get('users/{user}/replies','RepliesController@userIndex')->name('users.replies.index');
 
 
             /**
@@ -87,7 +95,12 @@ Route::prefix('v1')
 
                 Route::post('images', 'ImagesController@store')->name('images.store');
 
-                Route::resource('topics', 'TopicsController')->only(['store', 'update', 'destroy']);
+                Route::apiResource('topics', 'TopicsController')->only(['store', 'update', 'destroy']);
+
+                // 发布, 删除回复
+                Route::apiResource('topics.replies', 'RepliesController')->only([
+                    'store', 'destroy'
+                ]);
             });
         });
 
