@@ -101,6 +101,17 @@ Route::prefix('v1')
                 Route::apiResource('topics.replies', 'RepliesController')->only([
                     'store', 'destroy'
                 ]);
+
+                //通知列表
+                Route::apiResource('notifications', 'NotificationsController')->only([
+                    'index'
+                ]);
+
+                //未读消息统计
+                Route::get('notifications/stats','NotificationsController@stats')->name('notifications.stats');
+
+                //消息标记为已读
+                Route::patch('user/read/notifications','NotificationsController@read')->name('user.read.notifications');
             });
         });
 
